@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#091512"><title>量子对照 · t–Jz 实验室</title><link rel="stylesheet" href="quantum.css"><script defer src="quantum-model.js"></script><script defer src="quantum-ui.js"></script></head>
+<body>
+<header class="topbar"><a href="snake.html">← 返回 t–Jz 手动实验</a><span>CORRELATED / QUANTUM LAB</span><a href="index.html">玩法馆 ↗</a></header>
+<main>
+<section class="intro"><p class="eyebrow">副实验 02.1 · 一维开链 · 精确对角化</p><h1>不选下一步。<br><span>让量子态自己演化。</span></h1><p class="lede">手动路径改变一个配置；这里同时演化 28 个配置的复振幅。两个空穴会离域，但总能量与挤压自旋次序保持不变。</p><div class="chips"><span>8 格 · 2 洞 · 6 电子</span><span>固定 ↑↓↑↓↑↓ 扇区</span><span>ℏ = 1 · 开放边界</span></div></section>
+<div class="lab-layout">
+<section class="panel stage" aria-labelledby="stage-title">
+<div class="section-heading"><div><p class="eyebrow">HOLE DENSITY</p><h2 id="stage-title">空穴在哪里？</h2></div><div class="clock">τ <output id="time-value">0.00</output></div></div>
+<p class="muted small">柱高 = 该格为空穴的概率 ⟨1 − nᵢ⟩。它们不是两个有标签粒子的独立波包。</p>
+<div class="density-axis"><span>100%</span><span>空穴占据概率</span></div>
+<div id="lattice" class="lattice" role="img" aria-label="八个格点的空穴密度"></div>
+<div class="boundary-label"><span>开放端点</span><span>无首尾跨接</span><span>开放端点</span></div>
+<div class="transport"><button id="play" class="primary">▶ 播放</button><button id="step">步进 +0.1</button><button id="restart" aria-label="回到初态">↺ 归零</button><label class="speed">速度<select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div>
+<label class="scrub-label" for="time">时间 τ <span>可逆回看，非测量坍缩</span></label><input id="time" type="range" min="0" max="16" step="0.01" value="0" aria-label="演化时间"><div class="range-label"><span>0</span><span>τ = 16</span></div>
+<div class="order-box"><div><p class="eyebrow">SQUEEZED SPIN ORDER</p><h3>删去空穴，顺序始终相同</h3></div><div class="spin-order" aria-label="上 下 上 下 上 下"><b>↑</b><b>↓</b><b>↑</b><b>↓</b><b>↑</b><b>↓</b></div><p class="muted small">电子只能与相邻洞交换，不能越过另一个电子。每个参与叠加的配置都属于这一扇区。</p></div>
+</section>
+<aside class="panel controls" aria-labelledby="prepare-title"><p class="eyebrow">PREPARE / RESET</p><h2 id="prepare-title">准备初态</h2><p class="small muted">选择两个确定的空穴位置；剩余格按从左到右顺序填入 ↑↓↑↓↑↓。</p>
+<label for="preset">可复现实验</label><select id="preset"><option value="spread">分开放置 · 洞在 3 / 6</option><option value="pair">相邻放置 · 洞在 4 / 5</option><option value="edge">靠近边界 · 洞在 1 / 2</option><option value="freeze">关闭跃迁 · t = 0</option><option value="custom">自定义</option></select>
+<div class="two-fields"><label>空穴位置 A<select id="hole-a" aria-label="第一个初始空穴位置"></select></label><label>空穴位置 B<select id="hole-b" aria-label="第二个初始空穴位置"></select></label></div><p class="tiny muted">A / B 仅用于选择位置，不是粒子标签。</p>
+<div class="parameter"><label for="hop">跃迁 t</label><output id="hop-value">1.00</output></div><input id="hop" type="range" min="0" max="2" step="0.05" value="1">
+<div class="parameter"><label for="exchange">交换 Jz</label><output id="exchange-value">2.00</output></div><input id="exchange" type="range" min="0" max="8" step="0.1" value="2">
+<p class="reset-note">改变位置或参数会暂停，并从 τ = 0 重新制备初态；不是中途淬火。</p><p id="notice" role="status" aria-live="polite">准备好了。先预测，再按播放。</p>
+<div class="initial-preview"><span class="eyebrow">初态的真实晶格</span><div id="initial-spins" aria-label="初始自旋配置"></div></div>
+</aside>
+<section class="panel energy" aria-labelledby="energy-title"><div class="section-heading"><div><p class="eyebrow">ENERGY EXCHANGE</p><h2 id="energy-title">两部分交换，总和不动</h2></div><span class="badge">固定 H · 幺正演化</span></div>
+<div class="energy-values"><div><span class="dot total"></span>总能量 ⟨H⟩<strong id="energy-total">—</strong></div><div><span class="dot exchange"></span>交换 ⟨Hⱼz⟩<strong id="energy-j">—</strong></div><div><span class="dot kinetic"></span>动能 ⟨Hₜ⟩<strong id="energy-t">—</strong></div></div>
+<svg id="energy-plot" viewBox="0 0 640 180" role="img" aria-label="从时间0到16的总能量、交换能和动能曲线"></svg><p class="small muted">整段曲线预先计算；竖线是当前时间。能量使用同一固定单位 E★，τ 使用 ℏ/E★；不除以可为零的 t。</p>
+<div class="invariants"><div><span>概率归一</span><strong id="norm">1.000000</strong></div><div><span>总空穴数</span><strong id="holes">2.000000</strong></div><div><span>总 Sᶻ</span><strong>0</strong></div><div><span>总能量漂移</span><strong id="drift">—</strong></div></div>
+</section>
+<section class="panel configurations"><p class="eyebrow">SUPERPOSITION</p><h2>最可能的配置</h2><p class="muted small">下面只显示概率最高的四项，并非只保留四态。演化使用全部 28 个复振幅，包含量子干涉。</p><div id="configurations"></div><div class="adjacent-stat">两洞相邻概率 <strong id="adjacent">0%</strong></div><p class="muted tiny">相邻概率的变化，不等于已证明束缚态或热力学相分离。</p></section>
+</div>
+<section class="challenge-section"><p class="eyebrow">THINK BEFORE YOU PLAY</p><h2>三个小实验，检查你的直觉</h2><div class="challenges"><details><summary><span>01</span> t = 0，密度还会展开吗？</summary><p>选择“关闭跃迁”，再播放。H 此时在配置基底中为对角矩阵，初态只获得整体相位，所有空穴概率不动。恢复 t 后重新制备，再比较。</p></details><details><summary><span>02</span> 交换能变了，能量不守恒吗？</summary><p>看青色与金色曲线，它们可以变化，但有符号的和保持为总能量。手动实验的单个配置交换能，与这里完整量子态的 ⟨H⟩ 是不同对象。</p></details><details><summary><span>03</span> 洞展开后，↑↓ 可以换顺序吗？</summary><p>不行。一维开链上的最近邻跃迁无法让电子彼此越过。总 Sᶻ 相同还不够；固定的挤压自旋串是更强的扇区约束。二维没有这条简单的线性次序守恒。</p></details></div></section>
+<details class="science panel"><summary>科学说明 / Hamiltonian、算法与适用边界 <span>＋</span></summary><div class="science-body"><h3>这一页真正计算了什么？</h3><p>H = −t Σᵢ,σ (c̃†ᵢσ c̃ᵢ₊₁σ + h.c.) + Jz Σᵢ (Sᶻᵢ Sᶻᵢ₊₁ − nᵢ nᵢ₊₁ / 4)。c̃ 禁止双占据，求和只包含 1–2 到 7–8 的七条实际键。</p><p>先选两个洞的位置，再按剩余占据格的次序放入 ↑↓↑↓↑↓。固定序列的完整扇区维数为 C(8,2) = 28，不是整个 t–Jz Hilbert 空间。每个合法相邻洞–电子交换的矩阵元为 −t；对角线逐键计算标准交换项，反平行占据键贡献 −Jz/2。</p><p>实对称 Jacobi 对角化得到 H 的全部本征值与本征向量。按 ψ(τ) = exp(−iHτ)ψ(0) 直接传播；时间滑条不使用欧拉积分。所谓“精确对角化”指完整有限扇区计算，仍有浮点数舍入误差。</p><h3>可积性 ≠ 这一页画出的几条守恒量</h3><p>一维开边界的交替挤压自旋扇区可对应吸引的无自旋费米子 / XXZ 问题。这里不声称任意扇区或二维 t–Jz 普遍可积，也不把有限 8 格、某个初态的短时动力学当作热力学相图。开放边界下不展示动量守恒。</p><h3>继续读原始文献</h3><ul><li><a href="https://arxiv.org/abs/cond-mat/0003158" target="_blank" rel="noopener noreferrer">Batista–Ortiz：一维 t–Jz 的扇区与映射 ↗</a>。该文起始交换项不含 −nn/4，与本页约定不同，不能直接混用耦合阈值。</li><li><a href="https://journals.aps.org/prxquantum/abstract/10.1103/PRXQuantum.4.020357" target="_blank" rel="noopener noreferrer">一维量子晶格模型的严格对偶与子空间 ↗</a>。</li><li><a href="https://arxiv.org/abs/cond-mat/9609101" target="_blank" rel="noopener noreferrer">Zhang 等：含 −nn/4 约定的电荷与自旋动力学 ↗</a>。</li></ul></div></details>
+<footer><span>有限系统，真实振幅；从守恒量开始建立直觉。</span><a href="snake.html">回到手动路径实验 →</a></footer>
+</main>
+</body></html>
