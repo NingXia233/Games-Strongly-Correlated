@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import {createGame,placeError,finishPlacement,toggleCorrection,resolve,probe,publicView} from '../dist/toric-model.js';
+const source=readFileSync(new URL('../dist/toric-ui.js',import.meta.url),'utf8');
+const attacks=vm.runInNewContext(source.match(/const tutorialAttacks=(\[[\s\S]*?\]);/)[1]);
+const corrections=vm.runInNewContext(source.match(/const tutorialCorrections=(\[[\s\S]*?\]);/)[1]);
+test('all six playable tutorial demonstrations have intended physical outcomes',()=>{assert.equal(attacks.length,6);attacks.forEach((chain,i)=>{let s=createGame({probeBudget:i===5?1:0});for(const [e,l] of chain)s=placeError(s,e,l);s=finishPlacement(s);if(i===4){const v=publicView(s);assert.equal(v.syndrome.e.length,2);assert.equal(v.syndrome.m.length,2);}if(i===5){s=probe(s,'h:1:1');assert.equal(publicView(s).probes.at(-1).result,'Z');assert.equal(publicView(s).probesRemaining,0);}for(const [e,l] of corrections[i])s=toggleCorrection(s,e,l);const v=publicView(s);assert.equal(v.syndrome.e.length+v.syndrome.m.length,0);s=resolve(s);assert.equal(s.result.reason,i===3?'logical':'corrected');});});
+test('UI keeps secrets behind model views and blocks unclosed submission',()=>{assert.match(source,/publicView\(game,'defender'\)/);assert.match(source,/!placement&&!resolved&&count>0/);assert.match(source,/if\(token!==generation\)return/);assert.doesNotMatch(source,/localStorage\.setItem/);});

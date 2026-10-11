@@ -1,0 +1,11 @@
+{
+  "name": "correlated-escape",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "夜航实验室：六个凝聚态物理解谜主舱与两个研究员加试，纯静态交互游戏",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "dev": "python3 -m http.server 4173 --directory dist"
+  }
+}
