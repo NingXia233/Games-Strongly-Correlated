@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "凝聚态玩法馆：Toric Code 对抗、t–Jz 守恒路径与一维量子对照，保留八关夜航实验室",
+  "description": "凝聚态玩法馆：主推 t–Jz 空穴贪吃蛇的无界冲分与限能聚团，另有 Toric Code、磁弦实验与一维量子对照",
   "scripts": {
     "test": "node --test tests/*.test.js",
     "dev": "python3 -m http.server 4173 --directory dist"

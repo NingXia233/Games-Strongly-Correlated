@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#091512"><title>量子对照 · t–Jz 实验室</title><link rel="stylesheet" href="quantum.css"><script defer src="quantum-model.js"></script><script defer src="quantum-ui.js"></script></head>
 <body>
-<header class="topbar"><a href="snake.html">← 返回 t–Jz 手动实验</a><span>CORRELATED / QUANTUM LAB</span><a href="index.html">玩法馆 ↗</a></header>
+<header class="topbar"><a href="snake-lab.html">← 返回 t–Jz 手动实验</a><span>CORRELATED / QUANTUM LAB</span><a href="snake.html">空穴贪吃蛇 ↗</a><a href="index.html">玩法馆 ↗</a></header>
 <main>
 <section class="intro"><p class="eyebrow">副实验 02.1 · 一维开链 · 精确对角化</p><h1>不选下一步。<br><span>让量子态自己演化。</span></h1><p class="lede">手动路径改变一个配置；这里同时演化 28 个配置的复振幅。两个空穴会离域，但总能量与挤压自旋次序保持不变。</p><div class="chips"><span>8 格 · 2 洞 · 6 电子</span><span>固定 ↑↓↑↓↑↓ 扇区</span><span>ℏ = 1 · 开放边界</span></div></section>
 <div class="lab-layout">
@@ -32,6 +32,6 @@
 </div>
 <section class="challenge-section"><p class="eyebrow">THINK BEFORE YOU PLAY</p><h2>三个小实验，检查你的直觉</h2><div class="challenges"><details><summary><span>01</span> t = 0，密度还会展开吗？</summary><p>选择“关闭跃迁”，再播放。H 此时在配置基底中为对角矩阵，初态只获得整体相位，所有空穴概率不动。恢复 t 后重新制备，再比较。</p></details><details><summary><span>02</span> 交换能变了，能量不守恒吗？</summary><p>看青色与金色曲线，它们可以变化，但有符号的和保持为总能量。手动实验的单个配置交换能，与这里完整量子态的 ⟨H⟩ 是不同对象。</p></details><details><summary><span>03</span> 洞展开后，↑↓ 可以换顺序吗？</summary><p>不行。一维开链上的最近邻跃迁无法让电子彼此越过。总 Sᶻ 相同还不够；固定的挤压自旋串是更强的扇区约束。二维没有这条简单的线性次序守恒。</p></details></div></section>
 <details class="science panel"><summary>科学说明 / Hamiltonian、算法与适用边界 <span>＋</span></summary><div class="science-body"><h3>这一页真正计算了什么？</h3><p>H = −t Σᵢ,σ (c̃†ᵢσ c̃ᵢ₊₁σ + h.c.) + Jz Σᵢ (Sᶻᵢ Sᶻᵢ₊₁ − nᵢ nᵢ₊₁ / 4)。c̃ 禁止双占据，求和只包含 1–2 到 7–8 的七条实际键。</p><p>先选两个洞的位置，再按剩余占据格的次序放入 ↑↓↑↓↑↓。固定序列的完整扇区维数为 C(8,2) = 28，不是整个 t–Jz Hilbert 空间。每个合法相邻洞–电子交换的矩阵元为 −t；对角线逐键计算标准交换项，反平行占据键贡献 −Jz/2。</p><p>实对称 Jacobi 对角化得到 H 的全部本征值与本征向量。按 ψ(τ) = exp(−iHτ)ψ(0) 直接传播；时间滑条不使用欧拉积分。所谓“精确对角化”指完整有限扇区计算，仍有浮点数舍入误差。</p><h3>可积性 ≠ 这一页画出的几条守恒量</h3><p>一维开边界的交替挤压自旋扇区可对应吸引的无自旋费米子 / XXZ 问题。这里不声称任意扇区或二维 t–Jz 普遍可积，也不把有限 8 格、某个初态的短时动力学当作热力学相图。开放边界下不展示动量守恒。</p><h3>继续读原始文献</h3><ul><li><a href="https://arxiv.org/abs/cond-mat/0003158" target="_blank" rel="noopener noreferrer">Batista–Ortiz：一维 t–Jz 的扇区与映射 ↗</a>。该文起始交换项不含 −nn/4，与本页约定不同，不能直接混用耦合阈值。</li><li><a href="https://journals.aps.org/prxquantum/abstract/10.1103/PRXQuantum.4.020357" target="_blank" rel="noopener noreferrer">一维量子晶格模型的严格对偶与子空间 ↗</a>。</li><li><a href="https://arxiv.org/abs/cond-mat/9609101" target="_blank" rel="noopener noreferrer">Zhang 等：含 −nn/4 约定的电荷与自旋动力学 ↗</a>。</li></ul></div></details>
-<footer><span>有限系统，真实振幅；从守恒量开始建立直觉。</span><a href="snake.html">回到手动路径实验 →</a></footer>
+<footer><span>有限系统，真实振幅；从守恒量开始建立直觉。</span><a href="snake-lab.html">回到手动路径实验 →</a></footer>
 </main>
 </body></html>
